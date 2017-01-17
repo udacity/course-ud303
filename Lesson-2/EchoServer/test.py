@@ -27,6 +27,7 @@ try:
       print("That looks like the hello server talking.")
 except requests.ConnectionError:
   print("Couldn't connect to the server. Is it running on port 8000?")
-except requests.RequestException:
-  print("Couldn't communicate with the server. Take a look at its output.")
+except requests.RequestException as e:
+  print("Couldn't communicate with the server ({})".format(e))
+  print("If it's running, take a look at the server's output.")
 
