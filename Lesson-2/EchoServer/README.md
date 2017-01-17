@@ -7,3 +7,9 @@ of the request path.
 
 See `EchoServer.py` for starter code.
 
+To test your code, you'll need two terminals open.  In one of them, run the
+server (with `python EchoServer.py`).  You can then access it from your
+browser, for instance at http://localhost:8000/GoodMorningHTTP.  In the
+other terminal, run the test script provided (`python test.py`).  The test
+script will send a request to the server and tell you whether it worked.
+
