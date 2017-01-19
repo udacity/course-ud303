@@ -5,8 +5,11 @@
 # the URI "http://localhost:8000/Balloon", the echo server will respond
 # with the text "Balloon" in the HTTP response body.
 #
+# Instructions:
+# 
 # The starter code for this exercise is the code from the hello server.
 # Your assignment is to change this code into the echo server:
+#
 #   1. Change the name of the handler from HelloHandler to EchoHandler.
 #   2. Change the response body from "Hello, HTTP!" to the query path.
 #
