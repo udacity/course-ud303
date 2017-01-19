@@ -1,11 +1,12 @@
 # Lesson 2
 
-There are six downloadable exercises in Lesson 2 of this course.
+There are seven downloadable exercises in Lesson 2 of this course.
 
-* The echo server
-* HTML forms
-* The messageboard server, part one
-* The messageboard server, part two
-* The JSON client demo
-* The bookmark server
+1. The echo server
+2. HTML forms
+3. The messageboard server, part one (POST requests)
+4. The messageboard server, part two (GET and POST)
+5. The messageboard server, part three (POST-Redirect-GET)
+6. The JSON client demo
+7. The bookmark server
 
