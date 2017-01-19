@@ -2,7 +2,9 @@
 #
 # Step two in building the messageboard server.
 # 
-# 
+# Instructions:
+#   1. In the do_POST method, send a 303 redirect back to the / page.
+#   2. In the do_GET method, put the response together and send it.
 
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import parse_qs
@@ -37,10 +39,7 @@ class MessageHandler(BaseHTTPRequestHandler):
         # Store it in memory.
         memory.append(message)
 
-        # Send a 303 back to the root page
-        self.send_response(303)  # redirect via GET
-        self.send_header('Location', '/')
-        self.end_headers()
+        # 1. Send a 303 redirect back to the root page.
 
     def do_GET(self):
         # First, send a 200 OK response.
@@ -50,9 +49,9 @@ class MessageHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html; charset=utf-8')
         self.end_headers()
 
-        # Send the form with the messages in it.
-        mesg = form.format("\n".join(memory))
-        self.wfile.write(mesg.encode())
+        # 2. Put the response together out of the form and the stored messages.
+
+        # 3. Send the response.
 
 if __name__ == '__main__':
     server_address = ('', 8000)
