@@ -1,4 +1,5 @@
 # Lesson 1
 
-There are no downloadable exercises for Lesson 1 of this course.
+The exercises for Lesson 1 of this course don't require any downloadable
+files.
 
