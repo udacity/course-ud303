@@ -15,7 +15,7 @@
 # 3. Extract the "message" field from the request data.
 #
 # When you're done, run this server and test it from your browser using the
-# MessageboardPartOne.html form.  Then run the test.py script to check it.
+# Messageboard.html form.  Then run the test.py script to check it.
 
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import parse_qs
