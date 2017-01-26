@@ -9,10 +9,15 @@
 # My name is Tyler Hudson and the PIN on my card is 4840.
 
 import requests
-r = requests.get("http://uinames.com/api?ext&region=United%20States",
-                 timeout=2.0)
-# 1. Add something here!
 
-print("My name is {} {} and the PIN on my card is {}.".format(
-# 2. Add something here!
-))
+def SampleRecord():
+    r = requests.get("http://uinames.com/api?ext&region=United%20States",
+                     timeout=2.0)
+    # 1. Add a line of code here to decode JSON from the response.
+
+    return "My name is {} {} and the PIN on my card is {}.".format(
+        # 2. Add the correct fields from the JSON data structure.
+    )
+
+if __name__ == '__main__':
+    print(SampleRecord())
