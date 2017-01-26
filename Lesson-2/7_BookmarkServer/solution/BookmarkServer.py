@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# A quick & dirty URL shortener
+# A *bookmark server* or URI shortener.
 
 import http.server
 import requests
@@ -12,11 +12,11 @@ form = '''<!DOCTYPE html>
 <title>Bookmark Server</title>
 <form method="POST">
   <label>Long URI:
-    <input name="long">
+    <input name="longuri">
   </label>
   <br>
   <label>Short name:
-    <input name="short">
+    <input name="shortname">
   </label>
   <br>
   <button type="submit">Save it!</button>
@@ -27,8 +27,21 @@ form = '''<!DOCTYPE html>
 </pre>
 '''
 
+def CheckURI(uri, timeout=5):
+  '''Check whether this URI is reachable, i.e. does it return a 200 OK?'''
+  try:
+    r = requests.get(uri, timeout=timeout)
+    # If the GET request returns, was it a 200 OK?
+    return r.status_code == 200
+  except requests.RequestException:
+    # If the GET request raised an exception, it's not OK.
+    return False
+
+
 class Shortener(http.server.BaseHTTPRequestHandler):
   def do_GET(self):
+    # A GET request will either be for / (the root path) or for /some-name.
+    # Strip off the / and we have either empty string or a name.
     name = unquote(self.path[1:])
 
     if name:
@@ -42,7 +55,7 @@ class Shortener(http.server.BaseHTTPRequestHandler):
         self.send_response(404)
         self.send_header('Content-type', 'text/plain; charset=utf-8')
         self.end_headers()
-        self.wfile.write("I don't know that name.".encode())
+        self.wfile.write("I don't know '{}'.".format(name).encode())
     else:
       # Root path. Send the form.
       self.send_response(200)
@@ -58,19 +71,12 @@ class Shortener(http.server.BaseHTTPRequestHandler):
     length = int(self.headers.get('Content-length', 0))
     body = self.rfile.read(length).decode()
     params = parse_qs(body)
-    long = params["long"][0]
-    short = params["short"][0]
+    longuri = params["longuri"][0]
+    shortname = params["shortname"][0]
 
-    # Check the URI.
-    try:
-      r = requests.get(long)
-      success = r.status_code == 200
-    except requests.RequestException:
-      success = False
-
-    if success:
-      # Store the association.
-      memory[short] = long
+    if CheckURI(longuri):
+      # Remember this URI under the specified name.
+      memory[shortname] = longuri
 
       # Serve a redirect to the form.
       self.send_response(303)
@@ -81,7 +87,8 @@ class Shortener(http.server.BaseHTTPRequestHandler):
       self.send_response(404)
       self.send_header('Content-type', 'text/plain; charset=utf-8')
       self.end_headers()
-      self.wfile.write("Couldn't fetch {}. Sorry!".format(long).encode())
+      self.wfile.write(
+          "Couldn't fetch URI '{}'. Sorry!".format(longuri).encode())
 
 if __name__ == '__main__':
   server_address = ('', 8000)
