@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 #
+# TODO(karl): Add the rest of the tests!
+#
 # Test script for the Bookmark Server.
 #
 # The server should be listening on port 8000, answer a GET request to /
