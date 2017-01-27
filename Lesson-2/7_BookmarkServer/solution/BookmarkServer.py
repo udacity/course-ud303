@@ -29,7 +29,12 @@ form = '''<!DOCTYPE html>
 
 
 def CheckURI(uri, timeout=5):
-    '''Check whether this URI is reachable, i.e. does it return a 200 OK?'''
+    '''Check whether this URI is reachable, i.e. does it return a 200 OK?
+    
+    This function returns True if a GET request to uri returns a 200 OK, and
+    False if that GET request returns any other response, or doesn't return
+    (i.e. times out).
+    '''
     try:
         r = requests.get(uri, timeout=timeout)
         # If the GET request returns, was it a 200 OK?
