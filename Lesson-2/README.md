@@ -1,7 +1,8 @@
 # Lesson 2
 
-There are seven downloadable exercises in Lesson 2 of this course.
+There are eight downloadable exercises in Lesson 2 of this course.
 
+0. The hello server
 1. The echo server
 2. HTML forms
 3. The messageboard server, part one (POST requests)

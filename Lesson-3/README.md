@@ -2,7 +2,7 @@
 
 There are three downloadable exercises in Lesson 3 of this course:
 
-* The threaded server patch
-* The cookie name server
-* The parallel requests experiment
+1. The threaded server patch
+2. The cookie name server
+3. The parallel requests experiment
 
