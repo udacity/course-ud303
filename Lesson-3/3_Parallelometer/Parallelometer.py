@@ -3,7 +3,9 @@
 
 import http.server
 from socketserver import ThreadingMixIn
-import threading, time, random
+import threading
+import time
+import random
 
 # HTML main page. This page has 16 iframes, each of which causes
 # the browser to send an additional request to this server.
@@ -30,31 +32,33 @@ inflight = 0
 # request handlers at once, we need to use a lock.
 lock = threading.Lock()
 
+
 class Parallelometer(http.server.BaseHTTPRequestHandler):
-  def do_GET(self):
-    global inflight, lock
-    with lock:
-      # We're starting to handle a request.
-      inflight += 1
-    self.send_response(200)
-    self.send_header('Content-Type', 'text/html')
-    self.end_headers()
-    if self.path.startswith('/frame'):
-      # This request is for iframe contents.
-      time.sleep(random.random())  # Slow down by 0-1 seconds.
-      self.wfile.write('{} requests in flight'.format(inflight).encode())
-    else:
-      # This request is for the main page.
-      self.wfile.write(html.encode())
-      self.wfile.flush()    
-    with lock:
-      # We're done handling a request.
-      inflight -= 1
+    def do_GET(self):
+        global inflight, lock
+        with lock:
+            # We're starting to handle a request.
+            inflight += 1
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/html')
+        self.end_headers()
+        if self.path.startswith('/frame'):
+            # This request is for iframe contents.
+            time.sleep(random.random())  # Slow down by 0-1 seconds.
+            self.wfile.write('{} requests in flight'.format(inflight).encode())
+        else:
+            # This request is for the main page.
+            self.wfile.write(html.encode())
+            self.wfile.flush()
+        with lock:
+            # We're done handling a request.
+            inflight -= 1
+
 
 class ThreadHTTPServer(ThreadingMixIn, http.server.HTTPServer):
-  pass
+    pass
 
 if __name__ == '__main__':
-  address = ('', 8000)
-  httpd = ThreadHTTPServer(address, Parallelometer)
-  httpd.serve_forever()
+    address = ('', 8000)
+    httpd = ThreadHTTPServer(address, Parallelometer)
+    httpd.serve_forever()
