@@ -109,13 +109,61 @@ def test_POST_bad():
 
 
 def test_POST_good():
-   '''The server shoud accept a POST with a good URI and redirect to root.'''
+    '''The server should accept a POST with a good URI and redirect to root.'''
+    print("Testing POST request with good URI.")
+
+    uri = "http://localhost:8000/"
+    data = {'shortname': 'google', 'longuri': 'http://www.google.com/'}
+    try:
+        r = requests.post(uri, data=data, allow_redirects=False)
+    except requests.ConnectionError as e:
+        return ("Server dropped the connection. Step 1 or 4 isn't done yet?")
+
+    if r.status_code == 501:
+        return ("The server returned status code 501 Not Implemented.\n"
+                "This means it doesn't know how to handle a POST request.\n"
+                "(Is the correct server code running?)")
+    elif r.status_code != 303:
+        return ("Server returned status code {} instead of 303 when I gave\n"
+                "it a good URI in a POST request.".format(r.status_code))
+    elif 'location' not in r.headers:
+        return ("Server returned a 303 redirect with no Location header.")
+    elif r.headers['location'] != '/':
+        return ("Server returned redirect to {} instead of to /."
+                .format(r.headers['location']))
+    else:
+        print("POST request with bad URI correctly got a 303 to /.")
+        return None
 
 
 def test_GET_path():
-   '''The server should redirect on a GET to a known good URI.'''
+    '''The server should redirect on a GET to a recorded URI.'''
 
+    uri = "http://localhost:8000/google"
+    orig = "http://www.google.com/"
+    print("Testing GET request to {}.".format(uri))
 
+    try:
+        r = requests.get(uri, allow_redirects=False)
+    except requests.ConnectionError as e:
+        return ("Server dropped the connection. Step 1 or 4 isn't done yet?")
+
+    if r.status_code == 501:
+        return ("The server returned status code 501 Not Implemented.\n"
+                "This means it doesn't know how to handle a GET request.\n"
+                "(Is the correct server code running?)")
+    elif r.status_code != 303:
+        return ("Server returned status code {} instead of 303 when I asked\n"
+                "for it to follow a short URI.".format(r.status_code))
+    elif 'location' not in r.headers:
+        return ("Server returned a 303 with no Location header.")
+    elif r.headers['location'] != 'http://www.google.com/':
+        return ("Server returned a 303, but with a Location header of {}\n"
+                "when I expected it to be http://www.google.com/."
+                .format(r.headers('location')))
+    else:
+        print("GET request to {} returned 303 to {} successfully"
+              .format(uri, orig))
 
 if __name__ == '__main__':
     tests = [test_CheckURI_bad, test_CheckURI_good, test_connect,
