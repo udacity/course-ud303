@@ -10,6 +10,7 @@
 
 import requests
 
+
 def SampleRecord():
     r = requests.get("http://uinames.com/api?ext&region=United%20States",
                      timeout=2.0)

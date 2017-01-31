@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # Step two in building the messageboard server.
-# 
+#
 # Instructions:
 #   1. In the do_POST method, send a 303 redirect back to the / page.
 #   2. In the do_GET method, put the response together and send it.
@@ -22,6 +22,7 @@ form = '''<!DOCTYPE html>
 {}
   </pre>
 '''
+
 
 class MessageHandler(BaseHTTPRequestHandler):
     def do_POST(self):

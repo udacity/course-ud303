@@ -6,7 +6,7 @@
 # with the text "Balloon" in the HTTP response body.
 #
 # Instructions:
-# 
+#
 # The starter code for this exercise is the code from the hello server.
 # Your assignment is to change this code into the echo server:
 #
@@ -17,6 +17,7 @@
 # then run the "test.py" script to check your work.
 
 from http.server import HTTPServer, BaseHTTPRequestHandler
+
 
 class HelloHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -34,4 +35,3 @@ if __name__ == '__main__':
     server_address = ('', 8000)  # Serve on all addresses, port 8000.
     httpd = HTTPServer(server_address, HelloHandler)
     httpd.serve_forever()
-

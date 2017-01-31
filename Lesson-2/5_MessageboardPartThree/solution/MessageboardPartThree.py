@@ -19,6 +19,7 @@ form = '''<!DOCTYPE html>
   </pre>
 '''
 
+
 class MessageHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         # How long was the message?
