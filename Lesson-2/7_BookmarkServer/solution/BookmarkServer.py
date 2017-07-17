@@ -85,7 +85,7 @@ class Shortener(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write("Missing form fields!".encode())
             return
- 
+
         longuri = params["longuri"][0]
         shortname = params["shortname"][0]
 

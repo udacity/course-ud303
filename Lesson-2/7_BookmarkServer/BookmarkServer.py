@@ -116,7 +116,7 @@ class Shortener(http.server.BaseHTTPRequestHandler):
             # 3. Serve a 400 error with a useful message.
             #    Delete the following line.
             raise NotImplementedError("Step 3 isn't written yet!")
- 
+
         longuri = params["longuri"][0]
         shortname = params["shortname"][0]
 

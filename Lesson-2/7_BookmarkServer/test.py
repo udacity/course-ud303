@@ -53,7 +53,7 @@ def test_connect():
     print("Testing connecting to the server.")
     try:
         with socket.socket() as s:
-           s.connect(("localhost", 8000))
+            s.connect(("localhost", 8000))
         print("Connection attempt succeeded.")
         return None
     except socket.error:
