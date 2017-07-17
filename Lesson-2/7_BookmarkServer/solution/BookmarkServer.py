@@ -77,6 +77,15 @@ class Shortener(http.server.BaseHTTPRequestHandler):
         length = int(self.headers.get('Content-length', 0))
         body = self.rfile.read(length).decode()
         params = parse_qs(body)
+
+        # Check that the user submitted the form fields.
+        if "longuri" not in params or "shortname" not in params:
+            self.send_response(400)
+            self.send_header('Content-type', 'text/plain; charset=utf-8')
+            self.end_headers()
+            self.wfile.write("Missing form fields!".encode())
+            return
+ 
         longuri = params["longuri"][0]
         shortname = params["shortname"][0]
 

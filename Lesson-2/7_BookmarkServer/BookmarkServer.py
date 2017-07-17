@@ -26,10 +26,13 @@
 #
 # 2. Write the code inside do_GET that sends a 303 redirect to a known name.
 #
-# 3. Write the code inside do_POST that sends a 303 redirect to the form
+# 3. Write the code inside do_POST that sends a 400 error if the form fields
+#    are missing.
+#
+# 4. Write the code inside do_POST that sends a 303 redirect to the form
 #    after saving a newly submitted URI.
 #
-# 4. Write the code inside do_POST that sends a 404 error if a URI is not
+# 5. Write the code inside do_POST that sends a 404 error if a URI is not
 #    successfully checked (i.e. if CheckURI returns false).
 #
 # In each step, you'll need to delete a line of code that raises the
@@ -107,6 +110,13 @@ class Shortener(http.server.BaseHTTPRequestHandler):
         length = int(self.headers.get('Content-length', 0))
         body = self.rfile.read(length).decode()
         params = parse_qs(body)
+
+        # Check that the user submitted the form fields.
+        if "longuri" not in params or "shortname" not in params:
+            # 3. Serve a 400 error with a useful message.
+            #    Delete the following line.
+            raise NotImplementedError("Step 3 isn't written yet!")
+ 
         longuri = params["longuri"][0]
         shortname = params["shortname"][0]
 
@@ -114,15 +124,15 @@ class Shortener(http.server.BaseHTTPRequestHandler):
             # This URI is good!  Remember it under the specified name.
             memory[shortname] = longuri
 
-            # 3. Serve a redirect to the root page (the form).
+            # 4. Serve a redirect to the root page (the form).
             #    Delete the following line.
-            raise NotImplementedError("Step 3 isn't written yet!")
+            raise NotImplementedError("Step 4 isn't written yet!")
         else:
             # Didn't successfully fetch the long URI.
 
-            # 4. Send a 404 error with a useful message.
+            # 5. Send a 404 error with a useful message.
             #    Delete the following line.
-            raise NotImplementedError("Step 4 isn't written yet!")
+            raise NotImplementedError("Step 5 isn't written yet!")
 
 if __name__ == '__main__':
     server_address = ('', 8000)

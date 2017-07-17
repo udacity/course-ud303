@@ -85,6 +85,30 @@ def test_GET_root():
         return None
 
 
+def test_POST_nodata():
+    '''The server should accept a POST and return 400 error on empty form.'''
+    print("Testing POST request with empty form.")
+
+    uri = "http://localhost:8000/"
+    data = {}
+
+    try:
+        r = requests.post(uri, data=data, allow_redirects=False)
+    except requests.ConnectionError as e:
+        return ("Server dropped the connection. Step 1 or 5 isn't done yet?")
+
+    if r.status_code == 501:
+        return ("The server returned status code 501 Not Implemented.\n"
+                "This means it doesn't know how to handle a POST request.\n"
+                "(Is the correct server code running?)")
+    elif r.status_code != 400:
+        return ("Server returned status code {} instead of 400 when I gave\n"
+                "it an empty form in a POST request.".format(r.status_code))
+    else:
+        print("POST request with bad URI correctly got a 400.")
+        return None
+
+
 def test_POST_bad():
     '''The server should accept a POST and return 404 error on bad URI.'''
     print("Testing POST request with bad URI.")
@@ -94,7 +118,7 @@ def test_POST_bad():
     try:
         r = requests.post(uri, data=data, allow_redirects=False)
     except requests.ConnectionError as e:
-        return ("Server dropped the connection. Step 1 or 4 isn't done yet?")
+        return ("Server dropped the connection. Step 1 or 5 isn't done yet?")
 
     if r.status_code == 501:
         return ("The server returned status code 501 Not Implemented.\n"
@@ -117,7 +141,7 @@ def test_POST_good():
     try:
         r = requests.post(uri, data=data, allow_redirects=False)
     except requests.ConnectionError as e:
-        return ("Server dropped the connection. Step 1 or 4 isn't done yet?")
+        return ("Server dropped the connection. Step 1 or 5 isn't done yet?")
 
     if r.status_code == 501:
         return ("The server returned status code 501 Not Implemented.\n"
@@ -146,7 +170,7 @@ def test_GET_path():
     try:
         r = requests.get(uri, allow_redirects=False)
     except requests.ConnectionError as e:
-        return ("Server dropped the connection. Step 1 or 4 isn't done yet?")
+        return ("Server dropped the connection. Step 1 or 5 isn't done yet?")
 
     if r.status_code == 501:
         return ("The server returned status code 501 Not Implemented.\n"
@@ -167,7 +191,8 @@ def test_GET_path():
 
 if __name__ == '__main__':
     tests = [test_CheckURI_bad, test_CheckURI_good, test_connect,
-             test_GET_root, test_POST_bad, test_POST_good, test_GET_path]
+             test_GET_root, test_POST_nodata, test_POST_bad, test_POST_good,
+             test_GET_path]
     for test in tests:
         problem = test()
         if problem is not None:
