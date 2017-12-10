@@ -59,7 +59,7 @@ def test_GET():
     elif r.status_code != 200:
         return ("The server returned status code {} instead of a 200 OK."
                 ).format(r.status_code)
-    elif not r.headers['content-type'].startswith('text/html'):
+    elif not r.headers['content-type'].lower().startswith('text/html'):
         return ("The server didn't return Content-type: text/html.")
     elif '<title>Message Board</title>' not in r.text:
         return ("The server didn't return the form text I expected.")
