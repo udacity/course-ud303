@@ -1,13 +1,26 @@
 <!DOCTYPE html>
-<title>Login Page</title>
-<form action="http://localhost:8000/" method="GET">
-<label>Username:
-  <input type="text" name="username">
-</label>
-<br>
-<label>Password:
-  <input type="password" name="pw">
-</label>
-<br>
-<button type=submit>Log in!</button>
-</form>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Page</title>
+    <style>
+        label, input, button {
+            margin: 8px;
+        }
+    </style>
+</head>
+<body>
+    <form action="http://localhost:8000/" method="GET">
+        <h2>Login</h2>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username">
+        <br>
+        <label for="pw">Password:</label>
+        <input type="password" name="pw" id="pw">
+        <br>
+        <button type=submit>Log in!</button>
+    </form>
+</body>
+</html>
