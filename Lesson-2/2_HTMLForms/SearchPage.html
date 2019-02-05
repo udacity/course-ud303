@@ -1,18 +1,33 @@
 <!DOCTYPE html>
-<title>Search wizardry!</title>
-<form action="http://www.google.com/search" method="GET">
-  <label>Search term:
-    <input type="text" name="q">
-  </label>
-  <br>
-  <label>Corpus:
-    <select name="tbm">
-      <option selected value="">Regular</option>
-      <option value="isch">Images</option>
-      <option value="bks">Books</option>
-      <option value="nws">News</option>
-    </select>
-  </label>
-  <br>
-  <button type="submit">Go go!</button>
-</form>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Search wizardry!</title>
+	<style>
+		label, input, button {
+			margin: 8px;
+		}
+	</style>
+</head>
+<body>
+
+	<form action="http://www.google.com/search" method="GET">
+		<label>Search term:
+			<input type="text" name="q">
+		</label>
+		<br>
+		<label>Corpus:
+			<select name="tbm">
+				<option selected value="">Regular</option>
+				<option value="isch">Images</option>
+				<option value="bks">Books</option>
+				<option value="nws">News</option>
+			</select>
+		</label>
+		<br>
+		<button type="submit">Go go!</button>
+	</form>
+</body>
+</html>
